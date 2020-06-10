@@ -10,7 +10,7 @@ while(game):
     print('Is your secret number ' + str(int(g)), '?')
     user = input("Enter 'h' to indicate the guess is too high. Enter 'l' to indicate the guess is too low. Enter 'c' to indicate I guessed correctrly.")
     if(user == 'c'):
-        print('Game over. Your secret number was: 83')
+        print('Game over. Your secret number was: '+ str(g))
         game = False
     elif(user=='l'):
         low = g
