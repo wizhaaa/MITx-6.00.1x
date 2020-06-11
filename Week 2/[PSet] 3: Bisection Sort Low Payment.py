@@ -1,27 +1,37 @@
-bb = 999999
-aRate = .18
+#bisection select
+#expect 29157.09
+
+balance = 320000
+annualInterestRate = .2
 
 def low(balance, annualInterestRate):
     monthlyInterestRate = annualInterestRate/12
-    low = balance / 12
-    high = (balance * (1+monthlyInterestRate)**12) /12.0
-    step = .01
-    monthly = (high+low)/2
+    low = round(balance / 12 , 2 ) 
+    high = round((balance * (1+monthlyInterestRate)**12) /12.0 , 2 )
+    
+    payment = round((high+low)/2,2)
+    print('high is: ' + str(high))
+    print('low is', str(low))
+    print('initial monthly payment is ' , str(payment))
+
     debt = balance
-    while debt > 0 :
+
+    while low < (high - .001):
+        payment = round((high+low)/2.0 ,2)
         debt = balance
         for i in range(12):
-            debt -= monthly
-            if debt <= 0:
-                return monthly
+            debt -= payment
             debt *= (monthlyInterestRate + 1) 
-        if monthly < debt:
-            low = monthly
+        print('with a monthly payment of: ' + payment + ' we will pay: ' + str(payment*12))
+        debt = balance
+        if debt <= 0:
+            low = payment
         else:
-            high = monthly
-        
-        monthly = (high+low)/2
+            high = payment    
+        payment = (high+low)/2.0 
 
-    
+    print('this run:', str(payment))
+    return payment
 
-print("Lowest payment: " + str(round(low(bb, aRate))),2)
+
+print("Lowest payment: " + str(round(low(balance, annualInterestRate),2)))
