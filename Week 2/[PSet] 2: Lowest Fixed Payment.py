@@ -26,7 +26,7 @@
 # Monthly unpaid balance = (Previous balance) - (Minimum fixed monthly payment)
 # Updated balance each month = (Monthly unpaid balance) + 
 # (Monthly interest rate x Monthly unpaid balance)
-
+#-----------------------------------------------------------------------------------------------------------------------------
 #balance = 4773
 #annualInterestRate = .2
 
