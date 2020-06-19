@@ -96,7 +96,7 @@ def getAvailableLetters(lettersGuessed):
     # FILL IN YOUR CODE HERE...
     avail = 'abcdefghijklmnopqrstuvwxyz'
     guessed = set(lettersGuessed)
-    avail = { x for x in avail if x not in guessed}
+    avail = { x for x in avail if x not in guessed }
     avail = sorted(avail)
     avail = ''.join(avail)
     return avail
@@ -124,9 +124,46 @@ def hangman(secretWord):
     Follows the other limitations detailed in the problem write-up.
     '''
     # FILL IN YOUR CODE HERE...
-    print('Welcome to the game, Hangman!')
-    
 
+    print('Welcome to the game, Hangman!')
+    print('I am thinking of a word that is ' + str(len(secretWord)) + ' letters long.')
+    print('-----------')
+    lettersGuessed = []
+    guesses = 8
+    availableLets = getAvailableLetters(lettersGuessed)
+    game = isWordGuessed(secretWord, lettersGuessed)
+    while guesses > 0 or (game == False):
+      guessedWord = getGuessedWord(secretWord, lettersGuessed)
+      
+      game = isWordGuessed(secretWord, lettersGuessed)
+      print('You have ' + str(guesses) + ' guesses left')
+      print('Available letters: ' + availableLets)
+      userGuess = input('Please guess a letter: ')
+      if (userGuess in lettersGuessed):
+        print("Oops! You've already guessed that letter: " + guessedWord)
+      elif (userGuess in secretWord) == False:
+        print("Oops! That letter is not in my word: " + guessedWord)
+        if (userGuess in availableLets):
+          availableLets = availableLets.replace(userGuess, '')
+          print('evaluted')
+          print(userGuess)
+          print(availableLets)
+        guesses -= 1
+      else:
+        lettersGuessed.extend(userGuess)
+        guessedWord = getGuessedWord(secretWord, lettersGuessed)
+        print('Good Guess:' + str(guessedWord))
+      print('-----------')
+      game = isWordGuessed(secretWord, lettersGuessed)
+      if(game == True):
+        break
+    
+    if game:
+      print('Congratulations, you won!')
+    else:
+      print("Sorry, you ran out of guesses. The word was " + secretWord)
+    return
+      
 
 
 
@@ -136,11 +173,11 @@ def hangman(secretWord):
 # and run this file to test! (hint: you might want to pick your own
 # secretWord while you're testing)
 
-# secretWord = chooseWord(wordlist).lower()
-# hangman(secretWord)
+secretWord = chooseWord(wordlist).lower()
+hangman('y')
 
-secretWord = 'apple'
-lettersGuessed = [ 'e', 'i', 'k', 'p', 'r', 's', 'l']
-print(isWordGuessed(secretWord, lettersGuessed))
-print(getGuessedWord(secretWord, lettersGuessed))
-print(getAvailableLetters(lettersGuessed))
+# secretWord = 'apple'
+# lettersGuessed = [ 'e', 'i', 'k', 'p', 'r', 's', 'l']
+# print(isWordGuessed(secretWord, lettersGuessed))
+# print(getGuessedWord(secretWord, lettersGuessed))
+# print(getAvailableLetters(lettersGuessed))
