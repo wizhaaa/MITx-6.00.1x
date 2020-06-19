@@ -1,4 +1,3 @@
-
 # Hangman game
 #
 
@@ -43,7 +42,7 @@ def chooseWord(wordlist):
 
 # Load the list of words into the variable wordlist
 # so that it can be accessed from anywhere in the program
-#wordlist = loadWords()
+wordlist = loadWords()
 
 def isWordGuessed(secretWord, lettersGuessed):
     '''
@@ -126,29 +125,28 @@ def hangman(secretWord):
     guesses = 8
     availableLets = getAvailableLetters(lettersGuessed)
     game = isWordGuessed(secretWord, lettersGuessed)
-    while guesses > 0 or (game == False):
+    while guesses >= 1:
       guessedWord = getGuessedWord(secretWord, lettersGuessed)
       
       game = isWordGuessed(secretWord, lettersGuessed)
       print('You have ' + str(guesses) + ' guesses left')
       print('Available letters: ' + availableLets)
       userGuess = input('Please guess a letter: ')
-      #print(lettersGuessed)
+      
       if (userGuess in lettersGuessed):
         print("Oops! You've already guessed that letter: " + guessedWord)
-        print('first if')
+        
       elif (userGuess in secretWord) == False:
         print("Oops! That letter is not in my word: " + guessedWord)
         if (userGuess in availableLets):
           availableLets = availableLets.replace(userGuess, '')
-          #print('evaluted')
-          #print(userGuess)
-          #print(availableLets)
         guesses -= 1
-        lettersGuessed.extend(userGuess)
+        lettersGuessed += userGuess
+
       else:
         lettersGuessed.extend(userGuess)
         guessedWord = getGuessedWord(secretWord, lettersGuessed)
+        availableLets = availableLets.replace(userGuess, '')
         print('Good Guess:' + str(guessedWord))
       print('-----------')
       game = isWordGuessed(secretWord, lettersGuessed)
@@ -170,8 +168,8 @@ def hangman(secretWord):
 # and run this file to test! (hint: you might want to pick your own
 # secretWord while you're testing)
 
-#secretWord = chooseWord(wordlist).lower()
-hangman('y')
+secretWord = chooseWord(wordlist).lower()
+hangman(secretWord)
 
 # secretWord = 'apple'
 # lettersGuessed = [ 'e', 'i', 'k', 'p', 'r', 's', 'l']
